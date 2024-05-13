@@ -28,6 +28,11 @@ export class AppMenuComponent implements OnInit {
                         label: 'Usuarios',
                         icon: 'pi pi-fw pi-pencil',
                         routerLink: ['/artifacts', 'users']
+                    },
+                    {
+                        label: 'Remitos',
+                        icon: 'pi pi-fw pi-book',
+                        routerLink: ['/artifacts', 'delivery-notes']
                     }
                 ]
             },
