@@ -1,22 +1,20 @@
 <div class="grid">
-	<div class="col-12">
+	<!-- #Confeccion -->
+	<div class="col-3">
 		<div class="card">
 			<h5>Confección de Remitos</h5>
 			<p-toolbar>
 				<div class="p-toolbar-group-left flex flex-wrap">
-					<p-splitButton label="Options" icon="pi pi-check" [model]="items"></p-splitButton>
-
-					<div class="button-separator"></div>
-
-					<button pButton type="button" label="New" icon="pi pi-plus" class="mr-2"></button>
-					<button pButton type="button" label="Open" icon="pi pi-folder-open"
-						class="p-button-secondary mr-2"></button>
+					<div>
+						<p-splitButton label="Options" icon="pi pi-check" [model]="items"></p-splitButton>
+					</div>
 				</div>
 			</p-toolbar>
 		</div>
 	</div>
-#Confeccion Masiva
-	<div class="col-12">
+
+	<!-- #Confeccion Masiva -->
+	<div class="col-12" *ngIf="sectionVisibility.showMasiva">
 		<div class="card">
 			<h5>Masiva</h5>
 			<p-fileUpload name="demo[]" url="./upload.php" (onUpload)="onUpload($event)" [multiple]="true"
@@ -30,34 +28,397 @@
 		</div>
 	</div>
 
-	<div class="col-12">
+	<!-- #Confeccion Manual -->
+	<div class="col-12" *ngIf="sectionVisibility.showManual">
 		<div class="card">
 			<h5>Manual</h5>
-			<div class="grid p-fluid">
-				<div class="col-12 md:col-6">
-					<div class="p-inputgroup">
-						<span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-						<input type="text" pInputText placeholder="Username">
+
+			<!-- #Header Organization-->
+			<div class="grid">
+				<div class="col-12">
+					<div class="surface-card shadow-2 p-3 border-round">
+						<div class="grid">
+							<!-- Part 1 -->
+							<div class="col-12 md:col-5 flex">
+								<div class="flex align-items-center">
+									<img src="..\..\..\assets\demo\images\commons\logo.png" alt="Logo"
+										style="width: 100px; height: 100px; margin-right: 10px;">
+									<div>
+										<span class="block text-900 font-medium">Seven Express</span>
+										<span class="block text-500">Dirección</span>
+										<span class="block text-500">Código Postal</span>
+										<span class="block text-500">Email</span>
+									</div>
+								</div>
+							</div>
+							<!-- Part 2 -->
+							<div class="col-12 md:col-2 flex align-items-center justify-content-center text-center">
+								<div>
+									<img src="..\..\..\assets\demo\images\commons\remito.png" alt="Imagen"
+										style="width: 70px; height: 70px;">
+									<div class="block text-500 font-medium">Documento no válido como Factura</div>
+								</div>
+							</div>
+							<!-- Part 3 -->
+							<div class="col-12 md:col-5">
+								<div class="flex flex-column">
+									<div class="flex justify-content-end">
+										<span class="block text-900 font-medium">Página</span><span
+											class="block text-500 font-medium">&nbsp;1/1</span>
+									</div>
+									<div class="flex justify-content-end">
+										<span class="block text-900 font-medium">Fecha:</span><span
+											class="block text-500 font-medium">&nbsp;01/01/2024</span>
+									</div>
+									<div class="flex justify-content-end">
+										<span class="block text-900 font-medium">CUIT:</span><span
+											class="block text-500 font-medium">&nbsp;20-12345678-9</span>
+									</div>
+									<div class="flex justify-content-end">
+										<span class="block text-900 font-medium">Ing.Brutos:</span><span
+											class="block text-500 font-medium">&nbsp;12345-6</span>
+									</div>
+									<div class="flex justify-content-end">
+										<span class="block text-900 font-medium">Inicio de Act:</span><span
+											class="block text-500 font-medium">&nbsp;01/01/2000</span>
+									</div>
+									<div class="flex justify-content-end">
+										<span class="block text-900 font-medium">Remito Nro:</span><span
+											class="block text-500 font-medium">&nbsp;0001-00000001</span>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="col-12 md:col-6">
-					<div class="p-inputgroup">
-						<span class="p-inputgroup-addon"><i class="pi pi-tags" style="line-height: 1.25;"></i></span>
-						<span class="p-inputgroup-addon"><i class="pi pi-shopping-cart" style="line-height: 1.25;"></i></span>
-						<input type="text" pInputText placeholder="Price">
-						<span class="p-inputgroup-addon">$</span>
-						<span class="p-inputgroup-addon">.00</span>
+			</div>
+
+			<!-- #Header Customer Sender-->
+			<div class="grid">
+				<div class="col-12 md:col-6 lg:col-12">
+					<div class="surface-card shadow-2 p-3 border-round">
+						<!-- Título en negrita -->
+						<div class="mb-3">
+							<span class="text-900 font-bold text-xl">Remitente</span>
+						</div>
+						<div class="p-fluid p-formgrid grid">
+							<!-- Row 1 -->
+							<div class="field col-12 md:col-4">
+								<label htmlFor="firstname2">Cliente</label>
+								<p-autoComplete [(ngModel)]="selectedCountryAdvanced" [suggestions]="filteredCountries"
+									(completeMethod)="filterCountry($event)" field="name" [dropdown]="true">
+								</p-autoComplete>
+							</div>
+							<div class="field col-12 md:col-4">
+								<label htmlFor="firstname2">Nro. Cliente</label>
+								<input pInputText id="firstname2" type="text" />
+							</div>
+							<div class="field col-12 md:col-4">
+								<label htmlFor="lastname2">Cond. Venta</label>
+								<input pInputText id="lastname2" type="text" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- #Header Customer Receiver-->
+			<div class="grid">
+				<div class="col-12 md:col-6 lg:col-12">
+					<div class="surface-card shadow-2 p-3 border-round">
+						<!-- Título en negrita -->
+						<div class="mb-3">
+							<span class="text-900 font-bold text-xl">Destinatario</span>
+						</div>
+						<div class="p-fluid p-formgrid grid">
+							<!-- Row 1 -->
+							<div class="field col-12 md:col-4">
+								<label htmlFor="firstname2">Cliente</label>
+								<p-autoComplete [(ngModel)]="selectedCountryAdvanced" [suggestions]="filteredCountries"
+									(completeMethod)="filterCountry($event)" field="name" [dropdown]="true">
+								</p-autoComplete>
+							</div>
+							<div class="field col-12 md:col-4">
+								<label htmlFor="firstname2">Nro. Cliente</label>
+								<input pInputText id="firstname2" type="text" />
+							</div>
+							<div class="field col-12 md:col-4">
+								<label htmlFor="lastname2">Cond. Venta</label>
+								<input pInputText id="lastname2" type="text" />
+							</div>
+
+							<!-- Row 2 -->
+							<div class="field col-12 md:col-4">
+								<label htmlFor="firstname2">Dirección</label>
+								<input pInputText id="firstname2" type="text" />
+							</div>
+							<div class="field col-12 md:col-4">
+								<label htmlFor="firstname2">Situación de IVA</label>
+								<input pInputText id="firstname2" type="text" />
+							</div>
+							<div class="field col-12 md:col-4">
+								<label htmlFor="lastname2">Fecha Vto</label>
+								<p-calendar [showIcon]="true" inputId="icon"></p-calendar>
+							</div>
+
+							<!-- Row 3 -->
+							<div class="field col-12 md:col-4">
+								<label htmlFor="firstname2">CUIT</label>
+								<input pInputText id="firstname2" type="text" />
+							</div>
+							<div class="field col-12 md:col-4">
+								<label htmlFor="firstname2">Pedido OC.</label>
+								<input pInputText id="firstname2" type="text" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- #Subtable Articles-->
+			<div class="grid">
+				<div class="col-12">
+					<div class="card px-6 py-6">
+						<p-toast></p-toast>
+						<p-toolbar styleClass="mb-4">
+							<ng-template pTemplate="left">
+								<div class="my-2">
+									<button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+										(click)="openNew()"></button>
+									<button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"
+										(click)="deleteSelectedProducts()"
+										[disabled]="!selectedProducts || !selectedProducts.length"></button>
+								</div>
+							</ng-template>
+						</p-toolbar>
+
+						<p-table #dt [value]="products" [columns]="cols" responsiveLayout="scroll" [rows]="5"
+							[globalFilterFields]="['name','country.name','representative.name','status']" [rows]="5"
+							[paginator]="true" [rowsPerPageOptions]="[5,10,20]" [showCurrentPageReport]="true"
+							currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+							[(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="id">
+							<ng-template pTemplate="caption">
+								<div
+									class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+									<h5 class="m-0">Bultos</h5>
+									<span class="block mt-2 md:mt-0 p-input-icon-left">
+										<i class="pi pi-search"></i>
+										<input pInputText type="text" (input)="onGlobalFilter(dt, $event)"
+											placeholder="Search..." class="w-full sm:w-auto" />
+									</span>
+								</div>
+							</ng-template>
+							<ng-template pTemplate="header">
+								<tr>
+									<th style="width: 3rem">
+										<p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+									</th>
+									<th pSortableColumn="code">Nro. <p-sortIcon field="code"></p-sortIcon></th>
+									<th pSortableColumn="article">Artículo <p-sortIcon field="name"></p-sortIcon>
+									</th>
+									<th pSortableColumn="price">Descripción <p-sortIcon field="price"></p-sortIcon>
+									</th>
+									<th pSortableColumn="category">Cantidad <p-sortIcon field="category"></p-sortIcon>
+									</th>
+									<th></th>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="body" let-product>
+								<tr>
+									<td>
+										<p-tableCheckbox [value]="product"></p-tableCheckbox>
+									</td>
+									<td style="width:14%; min-width:10rem;"><span class="p-column-title">Nro.</span>
+										{{product.id}}
+									</td>
+									<td style="width:14%; min-width:10rem;"><span class="p-column-title">Artículo</span>
+										{{product.code || product.id}}
+									</td>
+									<td style="width:42%; min-width:10rem;"><span
+											class="p-column-title">Descripción</span>
+										{{product.name}} {{product.description}} {{product.name}}
+									</td>
+									<td style="width:14%; min-width:10rem;"><span class="p-column-title">Cantidad</span>
+										{{product.quantity}}
+									</td>
+									<td>
+										<div class="flex">
+											<button pButton pRipple icon="pi pi-pencil"
+												class="p-button-rounded p-button-success mr-2"
+												(click)="editProduct(product)"></button>
+											<button pButton pRipple icon="pi pi-trash"
+												class="p-button-rounded p-button-warning"
+												(click)="deleteProduct(product)"></button>
+										</div>
+									</td>
+								</tr>
+							</ng-template>
+						</p-table>
+					</div>
+
+					<p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Articulo Detalle"
+						[modal]="true" class="p-fluid">
+						<ng-template pTemplate="content">
+							<div class="field">
+								<label for="name">Articulo</label>
+								<input type="text" pInputText id="name" [(ngModel)]="product.name" required autofocus
+									[ngClass]="{'ng-invalid ng-dirty' : submitted && !product.name}" />
+								<small class="ng-dirty ng-invalid" *ngIf="submitted && !product.name">Name is
+									required.</small>
+							</div>
+							<div class="field">
+								<label for="description">Descripcion</label>
+								<textarea id="description" pInputTextarea [(ngModel)]="product.description" required
+									rows="3" cols="20"></textarea>
+							</div>
+							<div class="formgrid grid">
+								<div class="field col">
+									<label for="price">Price</label>
+									<p-inputNumber id="price" [(ngModel)]="product.price" mode="currency" currency="USD"
+										locale="en-US"></p-inputNumber>
+								</div>
+								<div class="field col">
+									<label for="quantity">Quantity</label>
+									<p-inputNumber id="quantity" [(ngModel)]="product.quantity"></p-inputNumber>
+								</div>
+							</div>
+						</ng-template>
+
+						<ng-template pTemplate="footer">
+							<button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+								(click)="hideDialog()"></button>
+							<button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+								(click)="saveProduct()"></button>
+						</ng-template>
+					</p-dialog>
+
+					<p-dialog [(visible)]="deleteProductDialog" header="Confirm" [modal]="true"
+						[style]="{width:'450px'}">
+						<div class="flex align-items-center justify-content-center">
+							<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+							<span *ngIf="product">Are you sure you want to delete <b>{{product.name}}</b>?</span>
+						</div>
+						<ng-template pTemplate="footer">
+							<button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+								(click)="deleteProductDialog = false"></button>
+							<button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+								(click)="confirmDelete()"></button>
+						</ng-template>
+					</p-dialog>
+
+					<p-dialog [(visible)]="deleteProductsDialog" header="Confirm" [modal]="true"
+						[style]="{width:'450px'}">
+						<div class="flex align-items-center justify-content-center">
+							<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+							<span>Are you sure you want to delete selected products?</span>
+						</div>
+						<ng-template pTemplate="footer">
+							<button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+								(click)="deleteProductsDialog = false"></button>
+							<button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+								(click)="confirmDeleteSelected()"></button>
+						</ng-template>
+					</p-dialog>
+				</div>
+			</div>
+
+			<!-- #Info Resumen-->
+			<div class="grid">
+				<div class="col-12 lg:col-6 xl:col-3">
+					<div class="card mb-0">
+						<div class="mb-3">
+							<div class="flex justify-content-between mb-3">
+								<div>
+									<span class="block text-500 font-medium mb-1">Volumen</span>
+									<div class="text-900 font-medium text-sm">0.93</div>
+								</div>
+								<div class="text-right">
+									<span class="block text-500 font-medium mb-1">Peso</span>
+									<div class="text-900 font-medium text-sm mb-3">176</div>
+								</div>
+							</div>
+
+							<div>
+								<span class="block text-500 font-medium mb-1">Cajas</span>
+								<div class="text-900 font-medium text-sm">10</div>
+							</div>
+							<div>
+								<span class="block text-500 font-medium mb-1">Pallets</span>
+								<div class="text-900 font-medium text-sm">1</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 lg:col-6 xl:col-3">
+					<div class="card mb-0">
+						<div class="mb-3">
+							<div>
+								<div class="text-900 font-medium text-sm mb-6">El destinatario firma conforme a
+									controlar
+									validando que la cantidad de bultos
+									recibidos coincide con la cantidad remitida. El control de bultos debe hacerse
+									en
+									presencia del transportista.
+									Cualquier alteracion en la carga debe dejarse asentada en el remito conforme. No
+									se
+									realizan entregas parciales.
+									No se aceptan reclamos generados 72hs despues de la fecha de entrega.
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 lg:col-6 xl:col-3">
+					<div class="card mb-0">
+						<div class="mb-3">
+							<div>
+								<span class="block text-500 font-medium mb-1">Telefono de contacto:</span>
+								<div class="text-900 font-medium text-sm mb-3">1126298201</div>
+							</div>
+							<div>
+								<span class="block text-500 font-medium mb-1">Mail:</span>
+								<div class="text-900 font-medium text-sm mb-3">santiago@nordelec.com.ar /
+									info@nordelec.com.ar</div>
+							</div>
+							<div>
+								<span class="block text-500 font-medium mb-1">Horario de atencion:</span>
+								<div class="text-900 font-medium text-sm">Lunes a Viernes de 8 a 18hs</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 lg:col-6 xl:col-3">
+					<div class="card mb-0">
+						<div class="mb-3">
+							<div class="field-container">
+								<span class="block text-500 font-medium mb-1">Firma:</span>
+								<div class="text-900 font-medium text-sm mb-3 dotted-line">
+									............................................................... </div>
+							</div>
+							<div class="field-container">
+								<span class="block text-500 font-medium mb-1">Aclaracion:</span>
+								<div class="text-900 font-medium text-sm mb-3 dotted-line">
+									..................................................... </div>
+							</div>
+							<div class="field-container">
+								<span class="block text-500 font-medium mb-1">DNI:</span>
+								<div class="text-900 font-medium text-sm dotted-line">
+									................................................................... </div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
+	<!-- #Listado de Impresion -->
 	<div class="col-12">
 		<div class="card">
 			<h5>Remitos</h5>
 			<p-toast></p-toast>
-			<p-table [value]="products" dataKey="name" [expandedRowKeys]="expandedRows" responsiveLayout="scroll">
+			<p-table [value]="products" dataKey="name" [expandedRowKeys]="expandedRows" responsiveLayout="scroll"
+				[paginator]="true" [rowsPerPageOptions]="[5,10,20]" [rows]="5" [(selection)]="selectedProducts" selectionMode="multiple">
 				<ng-template pTemplate="caption">
 					<button pButton icon="pi pi-fw {{isExpanded ? 'pi-minus' : 'pi-plus'}}"
 						label="{{isExpanded ? 'Collapse All' : 'Expand All'}}" (click)="expandAll()"></button>
@@ -66,7 +427,7 @@
 				</ng-template>
 				<ng-template pTemplate="header">
 					<tr>
-						<th style="width: 3rem"></th>
+						<th style="width: 3rem"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
 						<th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
 						<th>Image</th>
 						<th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
@@ -79,6 +440,9 @@
 				<ng-template pTemplate="body" let-product let-expanded="expanded">
 					<tr>
 						<td>
+							<p-tableCheckbox [value]="product"></p-tableCheckbox>
+						</td>
+						<td>
 							<button type="button" pButton pRipple [pRowToggler]="product"
 								class="p-button-text p-button-rounded p-button-plain"
 								[icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
@@ -88,11 +452,9 @@
 								class="shadow-4" /></td>
 						<td style="min-width: 8rem;">{{product.price | currency:'USD'}}</td>
 						<td style="min-width: 10rem;">{{product.category}}</td>
-						<td style="min-width: 10rem;">[ngModel]="product.rating" [readonly]="true" [cancel]="false">
-						</td>
-						<td><span
-								[class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span>
-						</td>
+						<td style="min-width: 10rem;">[ngModel]="product.rating" [readonly]="true" [cancel]="false"></td>
+						<td><span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span></td>
+						<td><button pButton type="button" icon="pi pi-print" class="p-button-danger"></button></td>
 					</tr>
 				</ng-template>
 				<ng-template pTemplate="rowexpansion" let-product>
@@ -106,7 +468,6 @@
 						<th pSortableColumn="customer">Customer <p-sortIcon field="customer"></p-sortIcon></th>
 						<th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
 						<th pSortableColumn="amount">Amount <p-sortIcon field="amount"></p-sortIcon></th>
-						<th pSortableColumn="stats">Status <p-sortIcon field="status"></p-sortIcon></th>
 						<th style="width: 4rem"></th>
 					</tr>
 				</ng-template>
@@ -116,8 +477,6 @@
 						<td>{{order.customer}}</td>
 						<td>{{order.date}}</td>
 						<td>{{order.amount | currency:'USD'}}</td>
-						<td><span [class]="'order-badge order-' + order.status.toLowerCase()">{{order.status}}</span>
-						</td>
 						<td><button pButton type="button" icon="pi pi-print" class="p-button-danger"></button></td>
 					</tr>
 				</ng-template>
@@ -130,7 +489,7 @@
 		</div>
 		</td>
 		</tr>
-		</ng-template>
+				</ng-template>
 			</p-table>
 		</div>
 	</div>
